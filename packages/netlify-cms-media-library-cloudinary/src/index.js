@@ -51,7 +51,7 @@ async function init({ options = {}, handleInsert } = {}) {
    * integration.
    */
   const { config: providedConfig = {}, ...integrationOptions } = options;
-  const resolvedOptions = { ...defaultOptions, ...integrationOptions };
+  let resolvedOptions = { ...defaultOptions, ...integrationOptions };
   const cloudinaryConfig = { ...defaultConfig, ...providedConfig, ...enforcedConfig };
   const cloudinaryBehaviorConfigKeys = ['default_transformations', 'max_files', 'multiple'];
   const cloudinaryBehaviorConfig = pick(cloudinaryConfig, cloudinaryBehaviorConfigKeys);
@@ -66,7 +66,13 @@ async function init({ options = {}, handleInsert } = {}) {
   const mediaLibrary = window.cloudinary.createMediaLibrary(cloudinaryConfig, { insertHandler });
 
   return {
-    show: ({ config: instanceConfig = {}, allowMultiple } = {}) => {
+    show: ({ config: instanceConfig = {}, allowMultiple, outputFilenameOnly } = {}) => {
+      // update insertHandler options based on field configuration for outputFilenameOnly
+      resolvedOptions = {
+        ...defaultOptions,
+        ...integrationOptions,
+        ...(outputFilenameOnly !== undefined ? { output_filename_only: outputFilenameOnly } : {}),
+      };
       /**
        * Ensure multiple selection is not available if the field is configured
        * to disallow it.

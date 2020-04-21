@@ -169,6 +169,7 @@ export default function withFileControl({ forImage } = {}) {
         privateUpload: field.get('private'),
         value,
         allowMultiple: !!mediaLibraryFieldOptions.get('allow_multiple', true),
+        outputFilenameOnly: mediaLibraryFieldOptions.get('output_filename_only'),
         config: mediaLibraryFieldOptions.get('config'),
         field,
       });

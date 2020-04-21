@@ -173,6 +173,7 @@ export interface MediaLibraryInstance {
     value?: string;
     config: StaticallyTypedRecord<{}>;
     allowMultiple?: boolean;
+    outputFilenameOnly?: boolean;
     imagesOnly?: boolean;
   }) => void;
   hide: () => void;

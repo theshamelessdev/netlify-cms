@@ -82,6 +82,7 @@ export function openMediaLibrary(
     value?: string;
     config?: Map<string, unknown>;
     allowMultiple?: boolean;
+    outputFilenameOnly?: boolean;
     forImage?: boolean;
     mediaFolder?: string;
     publicFolder?: string;
@@ -91,8 +92,22 @@ export function openMediaLibrary(
     const state = getState();
     const mediaLibrary = state.mediaLibrary.get('externalLibrary');
     if (mediaLibrary) {
-      const { controlID: id, value, config = Map(), allowMultiple, forImage } = payload;
-      mediaLibrary.show({ id, value, config: config.toJS(), allowMultiple, imagesOnly: forImage });
+      const {
+        controlID: id,
+        value,
+        config = Map(),
+        allowMultiple,
+        outputFilenameOnly,
+        forImage,
+      } = payload;
+      mediaLibrary.show({
+        id,
+        value,
+        config: config.toJS(),
+        allowMultiple,
+        outputFilenameOnly,
+        imagesOnly: forImage,
+      });
     }
     dispatch({ type: MEDIA_LIBRARY_OPEN, payload });
   };
