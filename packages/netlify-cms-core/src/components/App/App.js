@@ -223,6 +223,11 @@ class App extends React.Component {
               collections={collections}
               render={props => <Editor {...props} />}
             />
+            <RouteInCollection
+              collections={collections}
+              path="/collections/:name/filter/:filterTerm*"
+              render={props => <Collection {...props} />}
+            />
             <Route
               path="/search/:searchTerm"
               render={props => <Collection {...props} isSearchResults />}
