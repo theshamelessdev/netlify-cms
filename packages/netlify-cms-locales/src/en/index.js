@@ -218,7 +218,7 @@ const en = {
       entryUpdated: 'Entry status updated',
       onDeleteUnpublishedChanges: 'Unpublished changes deleted',
       onFailToAuth: '%{details}',
-      entriesSaved: 'Entries saved',
+      entriesMoved: 'Entries moved',
     },
   },
   workflow: {

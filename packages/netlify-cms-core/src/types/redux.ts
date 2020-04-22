@@ -134,6 +134,10 @@ export type CollectionFile = StaticallyTypedRecord<{
 
 export type CollectionFiles = List<CollectionFile>;
 
+type NestedObject = { depth: number };
+
+type Nested = StaticallyTypedRecord<NestedObject>;
+
 type CollectionObject = {
   name: string;
   folder?: string;
@@ -157,7 +161,7 @@ type CollectionObject = {
   label_singular?: string;
   label: string;
   sortableFields: List<string>;
-  nested?: string;
+  nested?: Nested;
 };
 
 export type Collection = StaticallyTypedRecord<CollectionObject>;
@@ -305,7 +309,7 @@ export interface EntriesSortFailurePayload extends EntriesSortRequestPayload {
   error: Error;
 }
 
-export interface EntriesPersistSuccessPayload extends EntryPayload {
+export interface EntriesMoveSuccessPayload extends EntryPayload {
   entries: EntryObject[];
 }
 
