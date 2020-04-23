@@ -115,6 +115,7 @@ class EditorControl extends React.Component {
     t: PropTypes.func.isRequired,
     isEditorComponent: PropTypes.bool,
     isNewEditorComponent: PropTypes.bool,
+    entry: ImmutablePropTypes.map.isRequired,
   };
 
   state = {
@@ -154,6 +155,7 @@ class EditorControl extends React.Component {
       isEditorComponent,
       isNewEditorComponent,
       t,
+      entry,
     } = this.props;
 
     const widgetName = field.get('widget');
@@ -256,6 +258,7 @@ class EditorControl extends React.Component {
               isEditorComponent={isEditorComponent}
               isNewEditorComponent={isNewEditorComponent}
               t={t}
+              entry={entry}
             />
             {fieldHint && (
               <ControlHint active={isSelected || this.state.styleActive} error={!!errors}>
@@ -271,7 +274,6 @@ class EditorControl extends React.Component {
 
 const mapStateToProps = state => {
   const { collections, entryDraft } = state;
-  const entry = entryDraft.get('entry');
   const collection = collections.get(entryDraft.getIn(['entry', 'collection']));
   const isLoadingAsset = selectIsLoadingAsset(state.medias);
 
@@ -291,7 +293,6 @@ const mapStateToProps = state => {
     queryHits: state.search.get('queryHits'),
     config: state.config,
     collection,
-    entry,
     isLoadingAsset,
     loadEntry,
   };
