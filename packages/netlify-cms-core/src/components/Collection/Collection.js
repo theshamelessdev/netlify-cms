@@ -72,8 +72,12 @@ class Collection extends React.Component {
       sortableFields,
       onSortClick,
       sort,
+      filterTerm,
     } = this.props;
-    const newEntryUrl = collection.get('create') ? getNewEntryUrl(collectionName) : '';
+    let newEntryUrl = collection.get('create') ? getNewEntryUrl(collectionName) : '';
+    if (newEntryUrl && filterTerm) {
+      newEntryUrl = `${newEntryUrl}?${filterTerm}`;
+    }
     return (
       <CollectionContainer>
         <Sidebar collections={collections} searchTerm={searchTerm} />
