@@ -25,7 +25,7 @@ const CollectionMain = styled.main`
   padding-left: 280px;
 `;
 
-class Collection extends React.Component {
+export class Collection extends React.Component {
   static propTypes = {
     searchTerm: PropTypes.string,
     collectionName: PropTypes.string,
