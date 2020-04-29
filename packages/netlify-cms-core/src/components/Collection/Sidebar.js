@@ -94,7 +94,7 @@ const SidebarNavLink = styled(NavLink)`
   `};
 `;
 
-class Sidebar extends React.Component {
+export class Sidebar extends React.Component {
   static propTypes = {
     collections: ImmutablePropTypes.orderedMap.isRequired,
     searchTerm: PropTypes.string,
@@ -113,13 +113,21 @@ class Sidebar extends React.Component {
     if (collection.has('nested')) {
       return (
         <li key={collectionName}>
-          <NestedCollection collection={collection} filterTerm={filterTerm} />
+          <NestedCollection
+            collection={collection}
+            filterTerm={filterTerm}
+            data-testid={collectionName}
+          />
         </li>
       );
     }
     return (
       <li key={collectionName}>
-        <SidebarNavLink to={`/collections/${collectionName}`} activeClassName="sidebar-active">
+        <SidebarNavLink
+          to={`/collections/${collectionName}`}
+          activeClassName="sidebar-active"
+          data-testid={collectionName}
+        >
           <Icon type="write" />
           {collection.get('label')}
         </SidebarNavLink>
