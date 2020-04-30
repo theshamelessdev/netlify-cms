@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import {
   createEmptyDraft,
   createEmptyDraftData,
@@ -125,7 +125,7 @@ describe('entries', () => {
     });
   });
   describe('createEmptyDraftData', () => {
-    it('should set defaults list widget to an empty array', () => {
+    it('should not output list with no default value', () => {
       const fields = fromJS([
         {
           name: 'images',
@@ -133,7 +133,7 @@ describe('entries', () => {
           field: { name: 'url', widget: 'text' },
         },
       ]);
-      expect(createEmptyDraftData(fields)).toEqual({ images: [] });
+      expect(createEmptyDraftData(fields)).toEqual({});
     });
 
     it('should set default value for list field widget', () => {
@@ -174,7 +174,39 @@ describe('entries', () => {
           ],
         },
       ]);
-      expect(createEmptyDraftData(fields)).toEqual({ images: [] });
+      expect(createEmptyDraftData(fields)).toEqual({});
+    });
+
+    it('should use list default value to populate entry when empty array is given', () => {
+      const fields = fromJS([
+        {
+          name: 'images',
+          widget: 'list',
+          default: [],
+          fields: [
+            { name: 'title', widget: 'text' },
+            { name: 'url', widget: 'text' },
+          ],
+        },
+      ]);
+      expect(createEmptyDraftData(fields)).toEqual({ images: List() });
+    });
+
+    it('should use list default value to populate entry when a non empty array is given', () => {
+      const fields = fromJS([
+        {
+          name: 'images',
+          widget: 'list',
+          default: [{ title: 'hello' }, { title: 'goodbye' }],
+          fields: [
+            { name: 'title', widget: 'text' },
+            { name: 'url', widget: 'text' },
+          ],
+        },
+      ]);
+      expect(createEmptyDraftData(fields)).toEqual({
+        images: fromJS([{ title: 'hello' }, { title: 'goodbye' }]),
+      });
     });
 
     it('should set default value for object field widget', () => {

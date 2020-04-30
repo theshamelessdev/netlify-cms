@@ -635,13 +635,13 @@ interface DraftEntryData {
     | boolean
     | DraftEntryData
     | DraftEntryData[]
-    | (string | DraftEntryData | boolean | never[])[];
+    | (string | DraftEntryData | boolean)[];
 }
 
 export function createEmptyDraftData(fields: EntryFields, withNameKey = true) {
   return fields.reduce(
     (
-      reduction: DraftEntryData | string | undefined | boolean | never[],
+      reduction: DraftEntryData | string | undefined | boolean,
       value: EntryField | undefined | boolean,
     ) => {
       const acc = reduction as DraftEntryData;
@@ -649,7 +649,7 @@ export function createEmptyDraftData(fields: EntryFields, withNameKey = true) {
       const subfields = item.get('field') || item.get('fields');
       const list = item.get('widget') == 'list';
       const name = item.get('name');
-      const defaultValue = item.get('default', list ? [] : null);
+      const defaultValue = item.get('default', null);
       const isEmptyDefaultValue = (val: unknown) => [[{}], {}].some(e => isEqual(val, e));
 
       if (List.isList(subfields)) {
@@ -658,7 +658,7 @@ export function createEmptyDraftData(fields: EntryFields, withNameKey = true) {
           : createEmptyDraftData(subfields as EntryFields);
         if (!isEmptyDefaultValue(subDefaultValue)) {
           acc[name] = subDefaultValue;
-        } else if (list) {
+        } else if (defaultValue && list) {
           acc[name] = defaultValue;
         }
         return acc;
@@ -670,7 +670,7 @@ export function createEmptyDraftData(fields: EntryFields, withNameKey = true) {
           : createEmptyDraftData(List([subfields as EntryField]));
         if (!isEmptyDefaultValue(subDefaultValue)) {
           acc[name] = subDefaultValue;
-        } else if (list) {
+        } else if (defaultValue && list) {
           acc[name] = defaultValue;
         }
         return acc;
