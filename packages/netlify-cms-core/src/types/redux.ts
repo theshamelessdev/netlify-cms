@@ -88,9 +88,9 @@ export type EntryObject = {
   collection: string;
   mediaFiles: List<MediaFileMap>;
   newRecord: boolean;
-  metaData: { status: string };
   author?: string;
   updatedOn?: string;
+  status: string;
 };
 
 export type EntryMap = StaticallyTypedRecord<EntryObject>;
